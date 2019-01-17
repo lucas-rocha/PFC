@@ -8,15 +8,16 @@
 % Randomly generated symmetric nonnegative matrix A to factorize
 %n=500; A=rand(n,n);
 %A=A+A';
-files = dir('input/*');
+files = dir('../Correlacao Cosseno/*');
 
 for file = files'
+    disp('-------------------------------')
     disp(file.name)
-    arquivo = strcat('input/', file.name)
+    arquivo = strcat('../Correlacao Cosseno/', file.name)
     A = dlmread(arquivo);
 
     % Inner rank of the factorization
-    r=30;
+    r=10;
 
     % Options (see loadoptions.m)
     options.maxiter   = 100;
@@ -29,10 +30,10 @@ for file = files'
     options.shuffle_columns = 0;
     tic; [H1,e1,t1] = symNMF(A,r,options); toc
 
-    B = H1 * H1';
-    disp(B)
+    %B = H1 * H1';
+    %disp(B)
     
-    arquivo = strcat('output/', file.name)
+    arquivo = strcat('../U/', file.name)
     dlmwrite(arquivo, H1, ' ')
   
 end
