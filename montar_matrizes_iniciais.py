@@ -35,8 +35,8 @@ def main():
     matriz_coocorrencia = "Matrizes de Coocorrencia/"
     output_indice = "Indices de Termos/"
     matriz_PPMI = "Matrizes PPMI/"
-    correlação_pearson = "Correlação de Pearson/"
-    correlação_cosseno = "Correlação Cosseno/"
+    correlacao_pearson = "Correlacao de Pearson/"
+    correlacao_cosseno = "Correlacao Cosseno/"
 
     for doc in os.listdir(folder):
         print("--> " + doc)
@@ -101,7 +101,7 @@ def main():
         output.close()
 
         # Montando e salvando matriz de Correlação de Pearson
-        file = correlação_pearson + doc
+        file = correlacao_pearson + doc
         output = open(file, 'w+')
 
         pearson = np.zeros((contador, contador), dtype=np.float64)
@@ -115,7 +115,7 @@ def main():
         output.close()
 
         # Montando e salvando matriz de Correlação Cosseno
-        file = correlação_cosseno + doc
+        file = correlacao_cosseno + doc
         output = open(file, 'w+')
 
         cosseno = np.zeros((contador, contador), dtype=np.float64)
