@@ -3,26 +3,19 @@ import numpy as np
 import json
 import math
 from scipy import stats
+from scipy.spatial import distance
 
 def calculo_ppmi(B, alpha, i, j):
     Pij = B[i][j]/alpha
     Pi = math.fsum(B[i])/alpha
     Pj = math.fsum(B[j]) / alpha
     K = Pij/(Pi*Pj)
-
-    print(alpha)
-    print(K)
     if K == 0:
         return 0
     P = math.log10(K)
-    print(P)
-    print('---------------------------------------------------')
     if P > 0:
         return P
     return 0
-
-#def calculo_alpha(B):
-
 
 def contagem_interseccao(a, b):
     s = set(a)
@@ -43,6 +36,8 @@ def main():
     output_indice = "Indices de Termos/"
     matriz_PPMI = "Matrizes PPMI/"
     correlação_pearson = "Correlação de Pearson/"
+    correlação_cosseno = "Correlação Cosseno/"
+
     for doc in os.listdir(folder):
         print("--> " + doc)
 
@@ -51,18 +46,22 @@ def main():
 
         lines = f.readlines()
 
-        indice = {}  #mapeamento do termo para inteiro
+        indice_aux = {}  #mapeamento do termo para inteiro
+        indice = {}  # mapeamento de inteiro para termo
         indice_ocorrencia = {}  #tweets em que o termo aparece
         contador = 0
 
         for index, l in enumerate(lines):
             for w in l.split():
-                if not w in indice.keys():
-                    indice[w] = contador
+                if not w in indice_aux.keys():
+                    indice[contador] = w
+                    indice_aux[w] = contador
                     contador += 1
-                    indice_ocorrencia[indice[w]] = [index]
+                    indice_ocorrencia[indice_aux[w]] = [index]
                 else:
-                    indice_ocorrencia[indice[w]].append(index)
+                    indice_ocorrencia[indice_aux[w]].append(index)
+
+        indice_aux.clear()
 
         # Salvando indice Termo-Inteiro
         file = output_indice + (doc.split('.txt')[0]) + '.json'
@@ -111,6 +110,20 @@ def main():
             for j in range(0,contador):
                 pearson[i][j], p_value = stats.pearsonr(PPMI[i],PPMI[j])
                 output.write(str(pearson[i][j]) + ' ')
+            output.write('\n')
+
+        output.close()
+
+        # Montando e salvando matriz de Correlação Cosseno
+        file = correlação_cosseno + doc
+        output = open(file, 'w+')
+
+        cosseno = np.zeros((contador, contador), dtype=np.float64)
+
+        for i in range(0, contador):
+            for j in range(0, contador):
+                cosseno[i][j]= distance.cosine(PPMI[i], PPMI[j])
+                output.write(str(cosseno[i][j]) + ' ')
             output.write('\n')
 
         output.close()
