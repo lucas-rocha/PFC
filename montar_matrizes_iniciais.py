@@ -85,6 +85,7 @@ def main():
             output.write('\n')
 
         output.close()
+        print('Matriz de Coocorrencia (ok).')
 
         # Montando e salvando matriz PPMI
         file = matriz_PPMI + doc
@@ -99,6 +100,7 @@ def main():
             output.write('\n')
 
         output.close()
+        print('Matriz de PPMI (ok).')
 
         # Montando e salvando matriz de Correlação de Pearson
         file = correlacao_pearson + doc
@@ -113,6 +115,7 @@ def main():
             output.write('\n')
 
         output.close()
+        print('Matriz de Correlação de Pearson (ok).')
 
         # Montando e salvando matriz de Correlação Cosseno
         file = correlacao_cosseno + doc
@@ -127,7 +130,7 @@ def main():
             output.write('\n')
 
         output.close()
-
+        print('Matriz de Correlação Cosseno (ok).')
 
 # -------------------------------------------------------------------------#
 # Executa o metodo main
