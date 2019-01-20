@@ -22,11 +22,12 @@ def matrix_factorization(R, P, Q, K, steps=5000, alpha=0.0002, beta=0.02):
                         e = e + (beta / 2) * (pow(P[i][k], 2) + pow(Q[k][j], 2))
         if e < 0.001:
             break
+    #return Q, P
     return Q
 
 
 def main():
-    folder_X = "Documentos Finais/"
+    folder_X = "X/"
     folder_U = "U/"
     output_V = "V/"
 
@@ -52,7 +53,7 @@ def main():
                 U[i].append(float(colunas[j]))
 
         U = np.array(U)
-        print('Matriz U pronta.')
+        print('Matriz U pronta')
 
         # Carregando matriz X
         file = folder_X + doc
@@ -61,20 +62,28 @@ def main():
         lines = f.readlines()
         f.close()
 
-        vectorizer = CountVectorizer()
-        X = vectorizer.fit_transform(lines)
-        X = X.toarray().T
+        n_documentos = len(lines[0].split())
 
-        n_documentos = len(X[0])
-        print('Matriz X pronta.')
+        X = []
+
+        for i in range(0, n_termos):
+            X.append([])
+            colunas = lines[i].split()
+            for j in range(0, n_documentos):
+                X[i].append(int(colunas[j]))
+
+        X = np.array(X)
+
+        print('Matriz X pronta')
 
         # Gerando matriz aleatória V
         V = np.random.rand(n_topicos, n_documentos)
 
         # Calculando Fatorização e gravando matriz V
-        print('Calculando Fatorização.')
+        print('Calculando Fatorização...')
+        #V, U = matrix_factorization(X, U, V, n_topicos)
         V = matrix_factorization(X, U, V, n_topicos)
-        ##nX = np.dot(U, V)
+
 
         file = output_V + doc
         output = open(file, 'w+')
@@ -85,7 +94,16 @@ def main():
             output.write('\n')
 
         output.close()
-        print('Matriz V pronta.')
+        print('Matriz V pronta')
+
+        R = np.dot(U, V)
+        file = doc
+        output = open(file, 'w+')
+
+        for i in range(0, len(R)):
+            for j in range(0, len(R[0])):
+                output.write(str(R[i][j]) + ' ')
+            output.write('\n')
 
 # -------------------------------------------------------------------------#
 # Executa o metodo main

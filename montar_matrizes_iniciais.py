@@ -32,6 +32,7 @@ def new_indice(lines):
 
 def main():
     folder = "Documentos Finais/"
+    output_X = "X/"
     matriz_coocorrencia = "Matrizes de Coocorrencia/"
     output_indice = "Indices de Termos/"
     matriz_PPMI = "Matrizes PPMI/"
@@ -48,7 +49,7 @@ def main():
 
         indice_aux = {}  #mapeamento do termo para inteiro
         indice = {}  # mapeamento de inteiro para termo
-        indice_ocorrencia = {}  #tweets em que o termo aparece
+        indice_ocorrencia = {}  #listas de documentos em que o termos aparecem
         contador = 0
 
         for index, l in enumerate(lines):
@@ -61,14 +62,30 @@ def main():
                 else:
                     indice_ocorrencia[indice_aux[w]].append(index)
 
-        indice_aux.clear()
-
-        # Salvando indice Termo-Inteiro
+        # Salvando indices Termo-Inteiro
         file = output_indice + (doc.split('.txt')[0]) + '.json'
         output = open(file, 'w+')
         out = json.dumps(indice)
         output.write(out)
         output.close()
+
+        # Montando e salvando matriz X
+        file = output_X + doc
+        output = open(file, 'w+')
+
+        X = np.zeros((len(indice_aux.keys()), len(lines)), dtype=np.int_)
+
+        for termo in indice_ocorrencia.keys():
+            for documento in indice_ocorrencia[termo]:
+                X[termo][documento] += 1
+
+        for i in range(0,len(indice_aux.keys())):
+            for j in range(0,len(lines)):
+                output.write(str(X[i][j]) + ' ')
+            output.write('\n')
+
+        indice_aux.clear()
+        print('Matriz X (ok).')
 
         # Montando e salvando matriz de coocorrencia
         file = matriz_coocorrencia + doc
