@@ -28,6 +28,7 @@ def main():
     import os
     folder = "egos/"
     output = "Documentos Finais/"
+
     for doc in os.listdir(folder):
         print("\n--> " + doc)
 
@@ -58,7 +59,6 @@ def main():
 
         f.close()
         outfile.close()
-
 # -------------------------------------------------------------------------#
 # Executa o metodo main
 if __name__ == "__main__": main()

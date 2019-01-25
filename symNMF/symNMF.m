@@ -192,3 +192,8 @@ function s=logdisplay_parameters(n,r,e0,options)
     end
     s=sprintf('%s\nInitial objective function=%1.5g',s,e0);
 end
+
+function rng(x)
+  randn("seed",x)
+  rand("seed",x)
+end
