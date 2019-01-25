@@ -58,8 +58,8 @@ def main():
         #---------- Calculando Fatorização e gravando matriz V ----------#
         print('Calculando Fatorização...')
 
-        W, H, n_iter = non_negative_factorization(X.T, n_components=n_topicos, init='custom', random_state=0, update_H=False,
-                                                  H=U.T, W=V.T)
+        W, H, n_iter = non_negative_factorization(X.T, n_components=n_topicos, init='custom', update_H=False, H=U.T, W=V.T,
+                                                  alpha=0.0002, max_iter=5000, verbose=True, shuffle=True)
 
         file = output_V + doc
         output = open(file, 'w+')
@@ -74,7 +74,7 @@ def main():
 
         #-----------------------------------------------------------#
         R = np.dot(W, H)
-        R = R.T
+        R = R.T - X
         file = doc
         output = open(file, 'w+')
 
