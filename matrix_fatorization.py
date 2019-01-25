@@ -1,40 +1,16 @@
 import os
 import numpy as np
-from sklearn.feature_extraction.text import CountVectorizer
-
-
-def matrix_factorization(R, P, Q, K, steps=5000, alpha=0.0002, beta=0.02):
-    for step in range(steps):
-        for i in range(len(R)):
-            for j in range(len(R[i])):
-                if R[i][j] > 0:
-                    eij = R[i][j] - np.dot(P[i, :], Q[:, j])
-                    for k in range(K):
-                        #P[i][k] = P[i][k] + alpha * (2 * eij * Q[k][j] - beta * P[i][k])
-                        Q[k][j] = Q[k][j] + alpha * (2 * eij * P[i][k] - beta * Q[k][j])
-
-        e = 0
-        for i in range(len(R)):
-            for j in range(len(R[i])):
-                if R[i][j] > 0:
-                    e = e + pow(R[i][j] - np.dot(P[i, :], Q[:, j]), 2)
-                    for k in range(K):
-                        e = e + (beta / 2) * (pow(P[i][k], 2) + pow(Q[k][j], 2))
-        if e < 0.001:
-            break
-    #return Q, P
-    return Q
-
+from sklearn.decomposition import NMF, non_negative_factorization
 
 def main():
     folder_X = "X/"
     folder_U = "U/"
     output_V = "V/"
 
-    for doc in os.listdir(folder_U):
+    for doc in os.listdir(folder_X):
         print("--> " + doc)
 
-        # Carregando matriz U
+        #---------- Carregando matriz U ----------#
         file = folder_U + doc
         f = open(file, 'r')
 
@@ -55,7 +31,7 @@ def main():
         U = np.array(U)
         print('Matriz U pronta')
 
-        # Carregando matriz X
+        #--------- Carregando matriz X ----------#
         file = folder_X + doc
         f = open(file, 'r')
 
@@ -76,27 +52,29 @@ def main():
 
         print('Matriz X pronta')
 
-        # Gerando matriz aleatória V
+        #---------- Gerando matriz aleatória V ----------#
         V = np.random.rand(n_topicos, n_documentos)
 
-        # Calculando Fatorização e gravando matriz V
+        #---------- Calculando Fatorização e gravando matriz V ----------#
         print('Calculando Fatorização...')
-        #V, U = matrix_factorization(X, U, V, n_topicos)
-        V = matrix_factorization(X, U, V, n_topicos)
 
+        W, H, n_iter = non_negative_factorization(X.T, n_components=n_topicos, init='custom', random_state=0, update_H=False,
+                                                  H=U.T, W=V.T)
 
         file = output_V + doc
         output = open(file, 'w+')
 
         for i in range(0, n_topicos):
             for j in range(0, n_documentos):
-                output.write(str(V[i][j]) + ' ')
+                output.write(str(W.T[i][j]) + ' ')
             output.write('\n')
 
         output.close()
         print('Matriz V pronta')
 
-        R = np.dot(U, V)
+        #-----------------------------------------------------------#
+        R = np.dot(W, H)
+        R = R.T
         file = doc
         output = open(file, 'w+')
 
@@ -104,6 +82,8 @@ def main():
             for j in range(0, len(R[0])):
                 output.write(str(R[i][j]) + ' ')
             output.write('\n')
+
+        output.close()
 
 # -------------------------------------------------------------------------#
 # Executa o metodo main
