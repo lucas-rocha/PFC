@@ -142,7 +142,8 @@ def main():
 
         for i in range(0, contador):
             for j in range(0, contador):
-                cosseno[i][j]= distance.cosine(PPMI[i], PPMI[j])
+                distancia = distance.cosine(PPMI[i], PPMI[j])
+                cosseno[i][j] = 1 - distancia
                 output.write(str(cosseno[i][j]) + ' ')
             output.write('\n')
 
