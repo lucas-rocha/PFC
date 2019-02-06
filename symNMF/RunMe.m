@@ -17,7 +17,7 @@ for file = files'
     A = dlmread(arquivo);
 
     % Inner rank of the factorization
-    r=10;
+    r=4;
 
     % Options (see loadoptions.m)
     options.maxiter   = 100;

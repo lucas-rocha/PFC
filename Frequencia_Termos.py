@@ -1,13 +1,11 @@
-from operator import itemgetter
-from nltk.corpus import stopwords
 from stopwords import stop_words
 
-def stopwords(line):
+def stopwords(line, ego):
     words = line.split()
     wordsFiltered = []
 
     for w in words:
-        if w not in stop_words:
+        if (not w == ego) and (w not in stop_words):
             wordsFiltered.append(w)
 
     return wordsFiltered
@@ -33,18 +31,19 @@ def main():
         print("\n--> " + doc)
 
         file = folder + doc
-        f = open(file, 'r')
+        f = open(file, 'r', encoding="utf8")
 
         doc_save = output + doc
         outfile = open(doc_save, 'a+')
 
+        ego = doc.split('.txt')[0]
 
         lines = f.readlines()
 
         termos = {}
 
         for line in lines:
-            tweet = stopwords(line)
+            tweet = stopwords(line, ego)
             if len(tweet) > 0:
                 cont = 0
                 for termo in tweet:

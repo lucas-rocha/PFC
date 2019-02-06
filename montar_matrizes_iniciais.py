@@ -8,7 +8,7 @@ from scipy.spatial import distance
 def calculo_ppmi(B, alpha, i, j):
     Pij = B[i][j]/alpha
     Pi = math.fsum(B[i])/alpha
-    Pj = math.fsum(B[j]) / alpha
+    Pj = math.fsum(B[j])/alpha
     K = Pij/(Pi*Pj)
     if K == 0:
         return 0

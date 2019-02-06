@@ -73,6 +73,7 @@ def main():
         print('Matriz V pronta')
 
         #-----------------------------------------------------------#
+        '''
         R = np.dot(W, H)
         R = R.T - X
         file = doc
@@ -84,7 +85,7 @@ def main():
             output.write('\n')
 
         output.close()
-
+        '''
 # -------------------------------------------------------------------------#
 # Executa o metodo main
 if __name__ == "__main__": main()
