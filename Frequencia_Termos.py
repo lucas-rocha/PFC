@@ -6,6 +6,9 @@ def stopwords(line, ego):
 
     for w in words:
         if (not w == ego) and (w not in stop_words):
+            if w.isdigit():
+                if int(w) < 10000:
+                    continue
             wordsFiltered.append(w)
 
     return wordsFiltered
