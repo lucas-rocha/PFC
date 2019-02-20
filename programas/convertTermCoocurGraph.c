@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MINCOOCUR 10
-#define MINWEIGHT 3
+#define MINCOOCUR 5
+#define MINWEIGHT 2
 
 /*comando de execucao: ./converteGraph.c arq.jason arqCoocur.txt nome do
 formato que se quer gerar o grafo: net ou lgl num colunas do arq arqCoocur.txt
