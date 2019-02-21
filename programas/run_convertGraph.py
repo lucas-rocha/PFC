@@ -1,6 +1,6 @@
 import os
 
-coocur_folder = '../Matrizes\\ de\\ Coocorrencia/'
+coocur_folder = '../Matrizes_de_Coocorrencia/'
 index_folder = '../Indices\\ de\\ Termos/'
 folder = '../Indices de Termos/'
 
