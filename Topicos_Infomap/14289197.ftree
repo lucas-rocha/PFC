@@ -1,4 +1,4 @@
-# '--ftree ../Matrizes_de_Coocorrencia/14289197.net ../Topicos_Infomap/' -> 1729 nodes and 22141 links partitioned in 0s from codelength 10.115668589 in one level to codelength 9.988938338 in 2 levels.
+# '--ftree --node-ranks ../Matrizes_de_Coocorrencia/14289197.net ../Topicos_Infomap/' -> 1729 nodes and 22141 links partitioned in 0s from codelength 10.115668589 in one level to codelength 9.988938338 in 2 levels.
 # path flow name node:
 1:1 0.0286067 "TRUMP" 63
 1:2 0.00769324 "TAX" 270
