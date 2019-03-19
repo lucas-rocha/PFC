@@ -1,4 +1,4 @@
-# '--ftree --overlapping ../Matrizes_de_Coocorrencia/943594670.net ../Topicos_Infomap/' -> 866 nodes and 151812 links partitioned in 0s from codelength 12.152882525 in one level to codelength 7.543174775 in 2 levels.
+# '--ftree --overlapping ../Matrizes_de_Coocorrencia/943594670.net ../Topicos_Infomap/' -> 866 nodes and 151812 links partitioned in 1s from codelength 12.152882525 in one level to codelength 7.543174775 in 2 levels.
 # path flow name node:
 1:1 0.0362585 "LOVE" 39
 1:2 0.0197837 "DALIA" 137
