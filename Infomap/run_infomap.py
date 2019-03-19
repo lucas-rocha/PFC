@@ -8,6 +8,6 @@ for doc in os.listdir(graphs_folder):
         continue
     print('\n\n--> ' + doc)
 
-    comando = './Infomap --ftree ' + graphs_folder + doc + ' ' + output_folder
+    comando = './Infomap --ftree --overlapping ' + graphs_folder + doc + ' ' + output_folder
     print(comando)
     os.system(comando)
