@@ -44,9 +44,18 @@ for doc in os.listdir():
     file = output_folder + ego + '.txt'
     output = open(file, 'w+')
 
+    alpha = 0.1 #valor mínimo de fluxo que um tópico precisa em relação ao melhor tópco (poda de tópicos)
+    min_fluxo = alpha * flow_cluster[0]
+    print('Maior fluxo: ' + str(flow_cluster[0]) + '\nFluxo mínimo: ' + str(min_fluxo) + '\n')
+
     for doc in documentos:
         termos = doc.split()
         for topic in range(0, n_cluster):
+
+            #--- Verificando o valor de poda de tópicos---#
+            if flow_cluster[topic] < min_fluxo:
+                break
+
             count = 0
             flow = 0
             for t in termos:

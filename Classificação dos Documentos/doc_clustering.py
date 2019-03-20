@@ -43,11 +43,20 @@ for doc in os.listdir():
     file = ego + '.group'
     output = open(file, 'w+')
 
+    generic_topic = []
+
     for t in range(0, n_topicos):
         output.write('# Cluster ' + str(t) +':\n')
         for i, j in enumerate(classificacao):
             if j == t:
-                output.write(documentos[i])
+                if j == 0 and np.amax(X[i]) == 0:
+                    generic_topic.append(documentos[i])
+                else:
+                    output.write(documentos[i])
         output.write('\n')
+
+    output.write('# Cluster Generico:\n')
+    for d in generic_topic:
+        output.write(d)
 
     output.close()
